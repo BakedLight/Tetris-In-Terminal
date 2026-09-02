@@ -23,7 +23,7 @@ void makeBox(int rows, int columns, int thickness) {
 }
 
 int main() {
-    const int ROWS = 20, COLUMNS = 10, THICKNESS = 2;
+    const int ROWS = 10, COLUMNS = 10, THICKNESS = 2;
     makeBox(ROWS, COLUMNS, THICKNESS);
 
     return 0;
