@@ -24,24 +24,30 @@ void makeBox(int rows, int columns, int thickness) {
     }
 }
 
-void gotoRow(int targetRow) {
-    HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
-    CONSOLE_SCREEN_BUFFER_INFO info;
-    GetConsoleScreenBufferInfo(h, &info);
-    SetConsoleCursorPosition(h, { 0, (SHORT)targetRow });
-}   
+void set_cursor(int x = 0 , int y = 0)
+{
+    HANDLE handle;
+    COORD coordinates;
+    handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    coordinates.X = x;
+    coordinates.Y = y;
+    SetConsoleCursorPosition ( handle , coordinates );
+}
 
 int main() {
     const int ROWS = 10, COLUMNS = 10, THICKNESS = 2;
+    
     // makeBox(ROWS, COLUMNS, THICKNESS);
 
     // Update Loop
     while (true){
-        // Check if a key was pressed without blocking
+
+        // Check if a key was pressed without blocking the execution
         if (_kbhit()) {
             char key = getch(); // Get the char immediately
             if (key == 'K') {
                 cout << "Left" << endl;
+                set_cursor(0, 1);
             }
             else if (key == 'M') {
                 cout << "Right" << endl;
