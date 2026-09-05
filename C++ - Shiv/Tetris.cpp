@@ -21,6 +21,7 @@ idk how to do ts, still gotta figure this part out
 */
 
 #include <iostream>
+#include <vector>
 #include <windows.h>
 #include <conio.h>
 #include <thread>
@@ -28,9 +29,28 @@ idk how to do ts, still gotta figure this part out
 
 using namespace std;
 
+void print2DVector (vector<vector<int>> vec) {
+    for (int i = 0; i < size(vec); i++) {
+        for (int j = 0; j < size(vec[0]); j++) {
+            cout << vec[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
 
+vector<vector<int>> vectorTranspose (vector<vector<int>> block) {
+    int rows = size(block[0]); // returns 3 in t block's case
+    int columns = size (block);
+    vector<vector<int>> transposedBlock(rows, vector<int>(columns, 0));
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            transposedBlock[i][(columns-j-1)] = block[j][i];
+        }
+    }
+    return transposedBlock;
+}
 
-void makeBox(int rows, int columns, int thickness) {
+void makeBox (int rows, int columns, int thickness) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < thickness; j++) {
             cout << "#";
@@ -92,15 +112,25 @@ void set_cursor(int x = 0 , int y = 0)
 
 int main() {
 
+    vector<vector<int>> lBlock = {
+        {1, 1, 1},
+        {1, 0, 0}
+    };
+
+    vector<vector<int>> transported = vectorTranspose(lBlock);
+    
 
     const int ROWS = 10, COLUMNS = 10, THICKNESS = 2;
     makeBox(ROWS, COLUMNS, THICKNESS);
+
 
     while(true) {
 
         // Check if a key was pressed without blocking the execution
         if (_kbhit()) {
+
             char key = getch(); // Get the char immediately
+
             if (key == 'K') {
                 cout << "Left" << endl;
             }
