@@ -1,6 +1,6 @@
 // STRUCTURE:
 /*
----------------------------------------------------------------------
+-----------------PREVIOUSLY DECIDED ONE NOT THE CURRENT--------------
 Thread 1 - Input check
 this thread will be used to check input events when they occur and move the blocked horizontally to update the location
 this thread is continuously gonna work regardless of thread 2's condition on whether it is paused or running
@@ -166,8 +166,18 @@ int main() {
     const int ROWS = 10, COLUMNS = 10, THICKNESS = 2;
     makeBox(ROWS, COLUMNS, THICKNESS);
 
+    int frameCount = 0;
+    int cursorPosX = COLUMNS/2, cursorposY = 1;
 
-    while(true) {
+    while(true) {  
+
+        this_thread::sleep_for(chrono::milliseconds(50));
+        frameCount += 1;
+
+        // Trying to clear input buffer (not working so far though)
+        while (_kbhit()) {
+            _getch();
+        }
 
         // Check if a key was pressed without blocking the execution
         if (_kbhit()) {
@@ -175,16 +185,20 @@ int main() {
             char key = getch(); // Get the char immediately
 
             if (key == 'K') {
-                cout << "Left" << endl;
+                cursorPosX -= 1;
+                cursorPosX = clamp(cursorPosX, THICKNESS, COLUMNS+THICKNESS);
+                cout << cursorPosX;
             }
             else if (key == 'M') {
-                cout << "Right" << endl;
+                cursorPosX += 1;
+                cursorPosX = clamp(cursorPosX, THICKNESS, COLUMNS+THICKNESS);
+                cout << cursorPosX;
             }
             else if (key == 'P') {
-                cout << "Down" << endl;
+                // cout << "Down" << endl;
             }
             else if (key == 'H') {
-                cout << "Up" << endl;
+                // cout << "Up" << endl;
             }
         }
 
