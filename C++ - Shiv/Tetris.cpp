@@ -117,7 +117,7 @@ int main() {
         {1, 0, 0}
     };
 
-    vector<vector<int>> transported = vectorTranspose(lBlock);
+    vector<vector<int>> transposed = vectorTranspose(lBlock);
     
 
     const int ROWS = 10, COLUMNS = 10, THICKNESS = 2;
