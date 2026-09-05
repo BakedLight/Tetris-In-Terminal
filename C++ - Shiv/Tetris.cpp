@@ -61,21 +61,48 @@ void set_cursor(int x = 0 , int y = 0)
     SetConsoleCursorPosition ( handle , coordinates );
 }
 
-void gravityUpdation () {
-    while (true){
-        cout << "Fall down" << endl;
-        this_thread::sleep_for(chrono::milliseconds(500));
-    }
-}
+// void timedUpdation () {
+//     while (true){
+//         // cout << "Fall down" << endl;
+//         // this_thread::sleep_for(chrono::milliseconds(500));
+//     }
+// }
 
-void inputCheck () {
+// void instantUpdation () {
+//     while(true) {
+
+//         // Check if a key was pressed without blocking the execution
+//         if (_kbhit()) {
+//             char key = getch(); // Get the char immediately
+//             if (key == 'K') {
+//                 cout << "Left" << endl;
+//             }
+//             else if (key == 'M') {
+//                 cout << "Right" << endl;
+//             }
+//             else if (key == 'P') {
+//                 cout << "Down" << endl;
+//             }
+//             else if (key == 'H') {
+//                 cout << "Up" << endl;
+//             }
+//         }
+//     }
+// }
+
+int main() {
+
+
+    const int ROWS = 10, COLUMNS = 10, THICKNESS = 2;
+    makeBox(ROWS, COLUMNS, THICKNESS);
+
     while(true) {
+
         // Check if a key was pressed without blocking the execution
         if (_kbhit()) {
             char key = getch(); // Get the char immediately
             if (key == 'K') {
                 cout << "Left" << endl;
-                // set_cursor(0, 1);
             }
             else if (key == 'M') {
                 cout << "Right" << endl;
@@ -87,26 +114,12 @@ void inputCheck () {
                 cout << "Up" << endl;
             }
         }
+
+        // Other code here
     }
-}
 
-int main() {
-    const int ROWS = 10, COLUMNS = 10, THICKNESS = 2;
-
-
-    thread t1(inputCheck);
-    thread t2(gravityUpdation);
-
-
-    // makeBox(ROWS, COLUMNS, THICKNESS);
-
-    // Update Loop
-    // while (true){
-
-    // }
-
-    if (t1.joinable()) t1.join();
-    if (t2.joinable()) t2.join();
+    // if (thread1.joinable()) thread1.join();
+    // if (thread2.joinable()) thread2.join();
 
     return 0;
 }
