@@ -112,12 +112,55 @@ void set_cursor(int x = 0 , int y = 0)
 
 int main() {
 
-    vector<vector<int>> lBlock = {
-        {1, 1, 1},
-        {1, 0, 0}
-    };
+    vector<vector<vector<int>>> Blocks = {
 
-    vector<vector<int>> transposed = vectorTranspose(lBlock);
+        // I Block
+        {
+            {1},
+            {1},
+            {1},
+            {1}
+        },
+        
+        // L Block
+        {
+            {1, 0},
+            {1, 0},
+            {1, 1}
+        },
+
+        // J Block
+        {
+            {0, 1},
+            {0, 1},
+            {1, 1}
+        },
+
+        // Z Block
+        {
+            {1, 1, 0},
+            {0, 1, 1}
+        },
+
+        // S Block
+        {
+            {0, 1, 1},
+            {1, 1, 0}
+        },
+
+        // O Block
+        {
+            {1, 1},
+            {1, 1}
+        },
+
+        // T Block
+        {
+            {0, 1, 0},
+            {1, 1, 1}
+        }
+
+    };
     
 
     const int ROWS = 10, COLUMNS = 10, THICKNESS = 2;
