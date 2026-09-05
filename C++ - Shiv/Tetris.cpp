@@ -1,3 +1,25 @@
+// STRUCTURE:
+/*
+---------------------------------------------------------------------
+Thread 1 - Input check
+this thread will be used to check input events when they occur and move the blocked horizontally to update the location
+this thread is continuously gonna work regardless of thread 2's condition on whether it is paused or running
+---------------------------------------------------------------------
+Thread 2 - Vertical movement / Gravity
+this thread will be used to move blocks down by one line each 0.3 seconds and 0.1 second when player intentionally wants blocks to fall faster
+so this thread will be paused for the time (0.3 or 0.1 sec) and then update and get paused again
+---------------------------------------------------------------------
+Screen Updation or Frame Updation:
+frame is going to be updated from top to bottom (i.e. the cursor will be moved to start of first line during each frame's drawing process)
+both threads will update frames using different algorithms
+thread 1: This will update each line just purely based on left/right movement or rotation of blocks
+thread 2: this will update each line as just being the upper line brought down (simulating blocks moving down) based on varying speeds
+---------------------------------------------------------------------
+Collisions or collision detection:
+idk how to do ts, still gotta figure this part out
+---------------------------------------------------------------------
+*/
+
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
@@ -39,20 +61,21 @@ void set_cursor(int x = 0 , int y = 0)
     SetConsoleCursorPosition ( handle , coordinates );
 }
 
-int main() {
-    const int ROWS = 10, COLUMNS = 10, THICKNESS = 2;
-    
-    // makeBox(ROWS, COLUMNS, THICKNESS);
-
-    // Update Loop
+void gravityUpdation () {
     while (true){
+        cout << "Fall down" << endl;
+        this_thread::sleep_for(chrono::milliseconds(500));
+    }
+}
 
+void inputCheck () {
+    while(true) {
         // Check if a key was pressed without blocking the execution
         if (_kbhit()) {
             char key = getch(); // Get the char immediately
             if (key == 'K') {
                 cout << "Left" << endl;
-                set_cursor(0, 1);
+                // set_cursor(0, 1);
             }
             else if (key == 'M') {
                 cout << "Right" << endl;
@@ -64,10 +87,26 @@ int main() {
                 cout << "Up" << endl;
             }
         }
-
-        // Other code here
-
     }
+}
+
+int main() {
+    const int ROWS = 10, COLUMNS = 10, THICKNESS = 2;
+
+
+    thread t1(inputCheck);
+    thread t2(gravityUpdation);
+
+
+    // makeBox(ROWS, COLUMNS, THICKNESS);
+
+    // Update Loop
+    // while (true){
+
+    // }
+
+    if (t1.joinable()) t1.join();
+    if (t2.joinable()) t2.join();
 
     return 0;
 }
